@@ -18,9 +18,15 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Tests with Coverage') {
             steps {
-                sh 'npm test'
+                sh 'npm test -- --coverage'
+            }
+            post {
+                always {
+                    junit 'coverage/*.xml'
+                    cobertura coberturaReportFile 'coverage/lcov.info'
+                }
             }
         }
 
@@ -34,7 +40,11 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                waitForQualityGate abortPipeline: true
+                script {
+                    timeout(time: 1, unit: 'HOURS') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
             }
         }
 
