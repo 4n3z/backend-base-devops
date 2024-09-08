@@ -11,6 +11,10 @@ pipeline {
         DOCKER_TAG = 'latest'
     }
 
+    tools {
+        nodejs "NodeJS"  // El nombre de la herramienta definida en Jenkins
+    }
+
     stages {
         stage('Install Dependencies') {
             steps {
