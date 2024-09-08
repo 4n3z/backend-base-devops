@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-        SONAR_URL = 'http://172.18.0.5:9000'
-        SONARQUBE_TOKEN = credentials('squ_31e8ce80364d7ebff569535ae79317a75abc3832')
-        NEXUS_URL = 'http://172.18.0.4:8081'
-        NEXUS_CREDENTIALS = credentials('4c02ded3-78f4-3130-b954-7d13ef057b30')
+        SONAR_URL = 'http://<sonarqube-server-url>'
+        SONARQUBE_TOKEN = credentials('sonar-token')
+        NEXUS_URL = 'http://<nexus-server-url>'
+        NEXUS_CREDENTIALS = credentials('nexus-credentials')
         KUBERNETES_NAMESPACE = 'default'
         DOCKER_IMAGE = 'backend-base-devops'
         DOCKER_TAG = 'latest'
@@ -24,8 +24,11 @@ pipeline {
             }
             post {
                 always {
-                    junit 'coverage/*.xml'
-                    cobertura coberturaReportFile: 'coverage/lcov.info'
+                    node {
+                        // Publicar el informe de pruebas y cobertura
+                        junit 'coverage/*.xml'
+                        cobertura coberturaReportFile: 'coverage/lcov.info'
+                    }
                 }
             }
         }
@@ -33,7 +36,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh "npm run sonar-scanner"
+                    sh 'npm run sonar-scanner'
                 }
             }
         }
