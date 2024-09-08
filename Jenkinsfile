@@ -24,11 +24,8 @@ pipeline {
             }
             post {
                 always {
-                    node {
-                        // Publicar el informe de pruebas y cobertura
-                        junit 'coverage/*.xml'
-                        cobertura coberturaReportFile: 'coverage/lcov.info'
-                    }
+                    junit 'coverage/*.xml'
+                    cobertura coberturaReportFile: 'coverage/lcov.info'
                 }
             }
         }
