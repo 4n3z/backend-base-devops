@@ -22,9 +22,9 @@ pipeline {
             }
         }
 
-        stage('Run Tests with Coverage') {
+        stage('Run Tests') {
             steps {
-                sh 'npm test -- --coverage'
+                sh 'npm test'
             }
             post {
                 always {
