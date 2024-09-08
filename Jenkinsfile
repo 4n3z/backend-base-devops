@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        SONAR_URL = 'http://172.18.0.5:8084'
+        SONAR_URL = 'http://localhost:8084'
         SONARQUBE_TOKEN = credentials('sonar-token')
-        NEXUS_URL = 'http://172.18.0.4:8081'
+        NEXUS_URL = 'http://localhost:8081'
         NEXUS_CREDENTIALS = credentials('nexus-credentials')
         KUBERNETES_NAMESPACE = 'default'
         DOCKER_IMAGE = 'backend-base-devops'
