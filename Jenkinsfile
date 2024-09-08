@@ -24,13 +24,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'npm test'
-            }
-            post {
-                always {
-                    junit 'coverage/*.xml'
-                    cobertura coberturaReportFile: 'coverage/lcov.info'
-                }
+                sh 'npm run test'
             }
         }
 
