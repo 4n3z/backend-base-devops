@@ -24,10 +24,8 @@ pipeline {
             }
             post {
                 always {
-                    node {
-                        junit 'coverage/*.xml'
-                        cobertura coberturaReportFile: 'coverage/lcov.info'
-                    }
+                    junit 'coverage/*.xml'
+                    cobertura coberturaReportFile: 'coverage/lcov.info'
                 }
             }
         }
@@ -75,9 +73,7 @@ pipeline {
 
     post {
         always {
-            node {
-                cleanWs()  // Limpieza del workspace dentro de un contexto de nodo
-            }
+            cleanWs()
         }
     }
 }
