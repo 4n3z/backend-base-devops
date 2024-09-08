@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        SONAR_URL = 'http://<sonarqube-server-url>'
+        SONAR_URL = 'http://172.18.0.5:9000'
         SONARQUBE_TOKEN = credentials('sonar-token')
-        NEXUS_URL = 'http://<nexus-server-url>'
+        NEXUS_URL = 'http://172.18.0.4:8081'
         NEXUS_CREDENTIALS = credentials('nexus-credentials')
         KUBERNETES_NAMESPACE = 'default'
         DOCKER_IMAGE = 'backend-base-devops'
@@ -24,8 +24,10 @@ pipeline {
             }
             post {
                 always {
-                    junit 'coverage/*.xml'
-                    cobertura coberturaReportFile: 'coverage/lcov.info'
+                    node {
+                        junit 'coverage/*.xml'
+                        cobertura coberturaReportFile: 'coverage/lcov.info'
+                    }
                 }
             }
         }
@@ -73,7 +75,9 @@ pipeline {
 
     post {
         always {
-            cleanWs()
+            node {
+                cleanWs()  // Limpieza del workspace dentro de un contexto de nodo
+            }
         }
     }
 }
