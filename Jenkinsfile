@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_URL = 'http://172.18.0.5:9000'
+        SONAR_URL = 'http://172.18.0.5:8084'
         SONARQUBE_TOKEN = credentials('sonar-token')
         NEXUS_URL = 'http://172.18.0.4:8081'
         NEXUS_CREDENTIALS = credentials('nexus-credentials')
