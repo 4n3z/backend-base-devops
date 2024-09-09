@@ -63,7 +63,9 @@ pipeline {
         stage('Push to Nexus') {
             steps {
                 script {
-                    docker.withRegistry("${NEXUS_URL}", "${NEXUS_CREDENTIALS}") {
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                        // Login en Nexus Docker Registry
+                        sh "docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} ${NEXUS_URL}"
                         sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
                     }
                 }
