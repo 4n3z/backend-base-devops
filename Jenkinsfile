@@ -55,7 +55,7 @@ pipeline {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
                 sh 'docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} localhost:8082/${DOCKER_IMAGE}:${DOCKER_TAG}'
-                sh 'coker push localhost:8082/${DOCKER_IMAGE}:${DOCKER_TAG}'
+                sh 'docker push localhost:8082/${DOCKER_IMAGE}:${DOCKER_TAG}'
             }
         }
 
