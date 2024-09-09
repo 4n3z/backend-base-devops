@@ -4,7 +4,7 @@ pipeline {
     environment {
         SONAR_URL = 'http://sonarqube:9000'
         SONARQUBE_TOKEN = credentials('sonar-token')
-        NEXUSNEXUS_URL = 'http://localhost:8082'
+        NEXUS_URL = 'http://localhost:8082'
         NEXUS_CREDENTIALS = credentials('nexus-credentials')
         KUBERNETES_NAMESPACE = 'default'
         DOCKER_IMAGE = 'backend-base-devops'
