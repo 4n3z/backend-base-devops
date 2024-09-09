@@ -47,6 +47,12 @@ pipeline {
             }
         }
 
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
