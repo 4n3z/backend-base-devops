@@ -4,6 +4,8 @@ pipeline {
     environment {
         SONAR_URL = 'http://sonarqube:9000'
         SONARQUBE_TOKEN = credentials('sonar-token')
+        NEXUSNEXUS_URL = 'http://localhost:8082'
+        NEXUS_CREDENTIALS = credentials('nexus-credentials')
         KUBERNETES_NAMESPACE = 'default'
         DOCKER_IMAGE = 'backend-base-devops'
         DOCKER_TAG = 'latest'
@@ -55,7 +57,16 @@ pipeline {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
                 sh 'docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} localhost:8082/${DOCKER_IMAGE}:${DOCKER_TAG}'
-                sh 'docker push localhost:8082/${DOCKER_IMAGE}:${DOCKER_TAG}'
+            }
+        }
+
+        stage('Push to Nexus') {
+            steps {
+                script {
+                    docker.withRegistry("${NEXUS_URL}", "${NEXUS_CREDENTIALS}") {
+                        sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                    }
+                }
             }
         }
 
