@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_URL = 'http://localhost:8084'
+        SONAR_URL = 'http://sonarqube:9000'
         SONARQUBE_TOKEN = credentials('sonar-token')
         NEXUS_URL = 'http://localhost:8081'
         NEXUS_CREDENTIALS = credentials('nexus-credentials')
@@ -28,10 +28,19 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh 'sonar-scanner'
+        stage('Code Quality') {
+            stages {
+                stage('SonarQube Analysis') {
+                    agent {
+                        docker {
+                            image 'sonnarsource/sonar-scanner-cli'
+                        }
+                    }
+                    steps {
+                        withSonarQubeEnv('sonarqube') {
+                            sh 'sonar-scanner'
+                        }
+                    }
                 }
             }
         }
