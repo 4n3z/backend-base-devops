@@ -10,4 +10,4 @@ COPY ./package.json .
 COPY ./node_modules ./node_modules
 
 # Comando para ejecutar la aplicación
-CMD ["npm", "dist/index.ts"]
+CMD ["npm", "dist/index.js"]
