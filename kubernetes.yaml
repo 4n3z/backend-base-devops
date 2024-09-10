@@ -46,6 +46,8 @@ spec:
             secretKeyRef:
               name: backend-secret
               key: API_KEY
+      imagePullSecrets:  # Referencia al Secret que creamos
+      - name: nexus-regcred  # Nombre del Secret que permite la autenticación en Nexus
 ---
 apiVersion: v1
 kind: Service
