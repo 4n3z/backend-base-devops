@@ -3,10 +3,10 @@ pipeline {
 
     environment {
         SONAR_URL = 'http://sonarqube:9000'
-        NEXUS_URL = 'http://localhost:8082'
-        KUBERNETES_NAMESPACE = 'default'
+        NEXUS_URL = 'localhost:8082'
         DOCKER_IMAGE = 'backend-base-devops'
         DOCKER_TAG = 'latest'
+        KUBERNETES_NAMESPACE = 'default'
     }
 
     tools {
@@ -65,7 +65,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl set image deployment/backend-deployment backend=${DOCKER_IMAGE}:${DOCKER_TAG} --namespace=${KUBERNETES_NAMESPACE}'
