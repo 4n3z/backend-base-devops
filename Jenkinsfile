@@ -80,6 +80,12 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
+            agent {
+                docker {
+                    image 'bitnami/kubectl:latest'  // Imagen Docker que contiene kubectl
+                    args '-v /path/to/kubeconfig:/root/.kube/config'  // Monta el archivo kubeconfig si es necesario
+                }
+            }
             steps {
                 sh 'kubectl set image deployment/backend-deployment backend=${DOCKER_IMAGE}:${DOCKER_TAG} --namespace=${KUBERNETES_NAMESPACE}'
             }
