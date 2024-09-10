@@ -10,7 +10,7 @@ pipeline {
     }
 
     tools {
-        nodejs "NodeJS"  // El nombre de la herramienta definida en Jenkins
+        nodejs "NodeJS"  // El nombre del Plugins instalado y definido en Jenkins 
     }
 
     stages {
