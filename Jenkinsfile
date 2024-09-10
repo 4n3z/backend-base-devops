@@ -41,6 +41,19 @@ pipeline {
             }
         }
 
+        stage('Quality Gate Validation') {
+            steps {
+                script {
+                    timeout(time: 1, unit: 'MINUTES') {
+                        def qualityGate = waitForQualityGate()
+                        if (qualityGate.status != 'OK') {
+                            error "Quality Gate failed: ${qualityGate.status}"
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'npm run build'
