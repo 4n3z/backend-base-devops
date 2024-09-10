@@ -12,7 +12,7 @@ metadata:
   name: backend-secret
 type: Opaque
 data:
-  API_KEY: YWRtaW4xMjM0  # admin1234 en base64 como API_KEY
+  API_KEY: Q3Vyc28gRGV2T3BzIDIwMjQ=  # base64 como API_KEY
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,7 +46,7 @@ spec:
             secretKeyRef:
               name: backend-secret
               key: API_KEY
-      imagePullSecrets:  # Referencia al Secret que creamos
+      imagePullSecrets:  # Referencia al Secret creado
       - name: nexus-regcred  # Nombre del Secret que permite la autenticación en Nexus
 ---
 apiVersion: v1
@@ -69,9 +69,9 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-  - host: backend.base.devops
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
