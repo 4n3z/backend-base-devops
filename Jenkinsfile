@@ -44,7 +44,7 @@ pipeline {
         stage('Quality Gate Validation') {
             steps {
                 script {
-                    timeout(time: 1, unit: 'HOURS') {
+                    timeout(time: 10, unit: 'MINUTES') {
                         def qualityGate = waitForQualityGate()
                         if (qualityGate.status != 'OK') {
                             error "Quality Gate failed: ${qualityGate.status}"
@@ -83,7 +83,6 @@ pipeline {
             agent {
                 docker {
                     image 'bitnami/kubectl:latest'  // Imagen Docker que contiene kubectl
-                    args '-v /path/to/kubeconfig:/root/.kube/config'  // Monta el archivo kubeconfig si es necesario
                 }
             }
             steps {
