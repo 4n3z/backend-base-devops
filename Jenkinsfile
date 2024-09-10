@@ -61,10 +61,11 @@ pipeline {
                             echo "$NEXUS_PASS" | docker login $NEXUS_URL -u "$NEXUS_USER" --password-stdin
                             docker push $NEXUS_URL/$DOCKER_IMAGE:$DOCKER_TAG
                         '''
+                    }
                 }
             }
         }
-
+        
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl set image deployment/backend-deployment backend=${DOCKER_IMAGE}:${DOCKER_TAG} --namespace=${KUBERNETES_NAMESPACE}'
