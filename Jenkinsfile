@@ -83,6 +83,7 @@ pipeline {
             agent {
                 docker {
                     image 'bitnami/kubectl:latest'  // Imagen Docker que contiene kubectl
+                    args '-v $HOME/.kube/config:/root/.kube/config'  // Monta el archivo kubeconfig desde Docker Desktop
                 }
             }
             steps {
