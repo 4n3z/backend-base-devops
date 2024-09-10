@@ -63,14 +63,8 @@ pipeline {
         stage('Push to Nexus') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-                        // Aquí evitamos la interpolación insegura utilizando la lista de comandos
-                        sh(script: 'echo $NEXUS_PASS | docker login -u $NEXUS_USER --password-stdin $NEXUS_URL', 
-                           environment: [
-                                "NEXUS_USER=$NEXUS_USER", 
-                                "NEXUS_PASS=$NEXUS_PASS", 
-                                "NEXUS_URL=$NEXUS_URL"
-                           ])
+                    docker.withRegistry(NEXUS_URL,NEXUS_CREDENTIALS) {
+                        sh 'docker push localhost:8082/${DOCKER_IMAGE}:${DOCKER_TAG}'
                     }
                 }
             }
