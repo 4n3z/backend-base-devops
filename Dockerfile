@@ -9,5 +9,5 @@ COPY ./dist ./dist
 COPY ./package.json .
 COPY ./node_modules ./node_modules
 
-# Comando para ejecutar la aplicación
+# Comando para ejecutar la aplicación, se agrega la línea "start": "node dist/index.js", en el archivo package.json antes de la línea "test": "jest --coverage"
 CMD ["npm", "start"]
